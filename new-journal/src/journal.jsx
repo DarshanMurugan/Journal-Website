@@ -9,24 +9,7 @@ function Journal(){
 
   const [newTittle,setNewTittle] = useState()
 
-  //useEffect(() => {
-    //fetch("http://127.0.0.1:8000/")
-    //.then((res) => res.json())
-    //.then((result) => setEntry(result)) 
-  //},[])
 
-  // const sendValue = async () => {
-        
-  //       await fetch("http://127.0.0.1:8000/name",{
-  //       method: "POST",
-  //       headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //       body: JSON.stringify({ username:name})
-  //   })
-
-    
-  // }
 
   const saveEntry = async () => {
     await fetch("http://127.0.0.1:8000/post-entry",{
