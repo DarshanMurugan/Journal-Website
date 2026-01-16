@@ -1,0 +1,66 @@
+ body{
+  background-color: aqua;
+}
+
+
+.credentials-entry-container{
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  height: fit-content;
+  display: block;
+  color: rgba(0, 255, 255, 0.586);
+  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.805)
+}
+
+.username-input, .password-input{
+  margin: 5px;
+  color: black;
+  margin-bottom: 10px;
+  border: aqua;
+  padding: 5px;
+  border: 5px;
+  border-color: black;
+  border-radius: 10px;
+  height: 35px;
+  width: 200px;
+  font-size: larger;
+}
+
+header {
+  color: aqua;
+}
+
+.enter-credentials-button{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 210px;
+  height: 35px;
+  background-color:rgb(241, 2, 241);
+  color: aqua;
+  font-family: fantasy;
+  cursor: pointer;
+  
+
+}
+
+.enter-credentials-button:hover {
+  background-color: rgb(188, 7, 188) ;
+  color:rgb(5, 157, 157)
+}
+
+h3 {
+  color:rgb(188, 7, 188);
+  font-family: fantasy;
+  font-size: x-large;
+  margin-bottom :  0px;
+  margin-top: 0px;
+  margin-left: 5px;
+}
+

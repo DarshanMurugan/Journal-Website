@@ -1,0 +1,8 @@
+<h1>{{entries.tittle_text}}</h1>
+<ul>
+  {% for entry in entries.entry_text.all 
+    %}
+    <li>{{entry.entry_text}}</li>
+
+  {% end for %}
+</ul>
