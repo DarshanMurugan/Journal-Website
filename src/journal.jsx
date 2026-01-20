@@ -6,13 +6,12 @@ function Journal(){
 
   const [entry,setEntry] = useState([])
   const [newEntry,setNewEntry] = useState()
-
-  const [newTittle,setNewTittle] = useState()
+  const [pastTitles,setPastTitles] = useState([])
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/entries_back_end/")
     .then((res) => res.json())
-    .then((data) => setEntry(data));
+    .then((data) => setPastTitles(data));
   },[]);
   //useEffect(() => {
     //fetch("http://127.0.0.1:8000/")
@@ -59,8 +58,8 @@ function Journal(){
     <div className="main-div">
       <div className="past-entries-div">
        
-        <ul className="entry-list">
-          {entry && entry.map((entryItem, index) => (
+        <ul className="title-list">
+          { pastTitles && pastTitles.map((entryItem, index) => (
             <li key={index}>
               <button className="past-entries-button">{entryItem.tittle_text}</button>
             </li>
