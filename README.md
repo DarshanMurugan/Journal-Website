@@ -1,16 +1,26 @@
-# React + Vite
+#Journal Website
+A simple web app using django and react for journalling(work in progress)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##prerequisits
+pip
+Django(v4.2+)
+python(v3.11+)
+npm(11.7+)
+react(19.1.1+)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#Tech Stack
+frontend: react,Vite
+back-end: Django, Django REST Framework
+DB: SQLite
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+#for windows: install frontend dependencies
+npm install
+npm start
 
-## Expanding the ESLint configuration
+#install back-end dependencies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+cd back-end
+pip install -r requirements.txt  
+python manage.py runserver
