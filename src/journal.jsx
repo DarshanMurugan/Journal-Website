@@ -1,19 +1,49 @@
 import { useState,useContext,useRef,useEffect } from "react";
-
-import './journal.css'
+import axios from "axios";
+import './journal.css';
 
 function Journal(){
 
-  const [entry,setEntry] = useState([])
-  const [newEntry,setNewEntry] = useState()
+  const [newEntry,setNewEntry] = useState([]);
+  const [newTitle,setNewTitle] = useState([])
+  const [pastContent,setPastContent] = useState([])
 
-  const [newTittle,setNewTittle] = useState()
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/entries_back_end/")
-    .then((res) => res.json())
-    .then((data) => setEntry(data));
-  },[]);
+
+  function fetchContent(){
+
+    useEffect(()=>{
+      fetchEntries();
+    },[]);
+
+    const fetchEntries = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/entries_back_end/");
+        setPastContent(response.data);
+      }catch (error) {
+        alert("Error fetching data",error);
+      }
+      }
+    };
+
+  fetchContent();
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try{
+      const response = await axios.post('http://127.0.0.1:8000/entries_back_end/',{
+      title_text:newTitle,
+      entry_text:newEntry
+      });
+      alert('Entry saved!');
+      
+    } catch (error) {
+      alert("error saving entry",error);
+    }
+  };
   //useEffect(() => {
     //fetch("http://127.0.0.1:8000/")
     //.then((res) => res.json())
@@ -56,13 +86,17 @@ function Journal(){
 
   return(
     <>
+    <form onSubmit={handleSubmit}>
+      
+    
     <div className="main-div">
       <div className="past-entries-div">
        
-        <ul className="entry-list">
-          {entry && entry.map((entryItem, index) => (
-            <li key={index}>
-              <button className="past-entries-button">{entryItem.tittle_text}</button>
+        <ul className="title-list">
+          {pastContent.map(item  => (
+            <li key={item.id}>
+              <button type="button" className="past-entries-button">{item.title_text}</button>
+              <p>{item.save_date}</p>
             </li>
           ))}
         </ul>
@@ -70,15 +104,15 @@ function Journal(){
       
         
         <div className="journal-entry-div">
-            <input onChange={e => setNewTittle(e.target.value)} className="tittle-input" placeholder="Tittle"></input>
+            <input onChange={e => setNewTitle(e.target.value)} className="tittle-input" placeholder="Tittle"></input>
             <textarea onChange={e => setNewEntry(e.target.value)} className="journal-entry"
             placeholder="Dear Dairy,"/>
         </div>
       
       
     </div>
-      <button >Save</button>
-    {/* onClick={saveEntry}       */}
+      <button type="submit" >Save</button>
+    </form>
     </> 
   )
 }
