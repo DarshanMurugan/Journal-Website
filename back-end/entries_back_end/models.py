@@ -6,7 +6,7 @@ from django.utils import timezone
 class Entries(models.Model):
   title_text = models.CharField(1000)
   entry_text = models.TextField()
-  save_date = models.DateTimeField("date published")
+  save_date = models.DateTimeField(auto_now_add=True)
 
   def __str__(self):
     return self.title_text

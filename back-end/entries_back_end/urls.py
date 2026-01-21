@@ -3,16 +3,10 @@
 
 from django.urls import path
 
-from . import views
+from .views import EntryCreateView
 
 app_name = "journal-entry"
 
 urlpatterns = [
-  path("", views.index, name = "index"),
-
-  path("tittle/<int:entry_id>/", views.tittle,name= "tittle"),
-
-  path("<int:entry_id>/entry/",views.entry_body, name="entry"),
-
-  path("<int:entry_id>/add/",views.add, name="add")
+    path('',EntryCreateView.as_view(),name = 'entries'),
 ]
