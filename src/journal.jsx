@@ -1,14 +1,17 @@
 import { useState,useContext,useRef,useEffect } from "react";
 import axios from "axios";
 import './journal.css';
+import {useOutletContext,useNavigate} from 'react-router-dom';
 
 function Journal(){
 
   const [newEntry,setNewEntry] = useState([]);
-  const [newTitle,setNewTitle] = useState([])
-  const [pastContent,setPastContent] = useState([])
+  const [newTitle,setNewTitle] = useState([]);
+  const [pastContent,setPastContent] = useState([]);
+  const [searchContent,setSearchContent] = useState([]);
 
-
+  const {setContent} = useOutletContext();
+  const navigate = useNavigate();
 
   function fetchContent(){
 
@@ -39,53 +42,31 @@ function Journal(){
       entry_text:newEntry
       });
       alert('Entry saved!');
+      window.location.reload();
       
     } catch (error) {
       alert("error saving entry",error);
     }
   };
-  //useEffect(() => {
-    //fetch("http://127.0.0.1:8000/")
-    //.then((res) => res.json())
-    //.then((result) => setEntry(result)) 
-  //},[])
 
-  // const sendValue = async () => {
-        
-  //       await fetch("http://127.0.0.1:8000/name",{
-  //       method: "POST",
-  //       headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //       body: JSON.stringify({ username:name})
-  //   })
 
+
+  const searchContentById = async(id) => {
+    try{
+      const response = await axios.get(`http://127.0.0.1:8000/entries_back_end/${id}`);
+      setContent(response.data);
+      navigate("/main/Content");
     
-  // }
+      
 
-//   const saveEntry = async () => {
-//     await fetch("http://127.0.0.1:8000/post-entry",{
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//       body: JSON.stringify({
-//         post:newEntry,
-//         tittle: newTittle
-//       })
-//
-//   })
-// }
-
-  // useEffect(() => {
-   // fetch("http://127.0.0.1:8000/past-entries")
-    // .then((entries) => entries.json())
-    // .then((entries) => setEntry(entries))
-    // },[]);
-    //
+    }catch(error){
+      console.log("error searching for data")
+    }
+  }
 
   return(
     <>
+    <div className="journal">
     <form onSubmit={handleSubmit}>
       
     
@@ -95,7 +76,7 @@ function Journal(){
         <ul className="title-list">
           {pastContent.map(item  => (
             <li key={item.id}>
-              <button type="button" className="past-entries-button">{item.title_text}</button>
+              <button onClick={() => searchContentById(item.id)} type="button" className="past-entries-button">{item.title_text}</button>
               <p>{item.save_date}</p>
             </li>
           ))}
@@ -113,6 +94,7 @@ function Journal(){
     </div>
       <button type="submit" >Save</button>
     </form>
+    </div>
     </> 
   )
 }

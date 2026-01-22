@@ -4,9 +4,11 @@
 from django.urls import path
 
 from .views import EntryCreateView
+from .views import GetContent
 
 app_name = "journal-entry"
 
 urlpatterns = [
     path('',EntryCreateView.as_view(),name = 'entries'),
+    path('<int:pk>/',GetContent.as_view()),
 ]
