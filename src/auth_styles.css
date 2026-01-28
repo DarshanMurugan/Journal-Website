@@ -1,66 +1,62 @@
- body{
-  background-color: aqua;
-}
+body {
+    background-color: #E1D9BC;
 
-
-.credentials-entry-container{
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left:50%;
-  transform: translate(-50%, -50%);
-  width: fit-content;
-  height: fit-content;
-  display: block;
-  color: rgba(0, 255, 255, 0.586);
-  
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.805)
-}
-
-.username-input, .password-input{
-  margin: 5px;
-  color: black;
-  margin-bottom: 10px;
-  border: aqua;
-  padding: 5px;
-  border: 5px;
-  border-color: black;
-  border-radius: 10px;
-  height: 35px;
-  width: 200px;
-  font-size: larger;
-}
-
-header {
-  color: aqua;
-}
-
-.enter-credentials-button{
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
-  width: 210px;
-  height: 35px;
-  background-color:rgb(241, 2, 241);
-  color: aqua;
-  font-family: fantasy;
-  cursor: pointer;
-  
+    align-items: center;
 
 }
+
+.credentials-entry-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 425px;
+    height: 550px;
+
+    align-content: center;
+    justify-items: center;
+
+    background-color: #30364F;
+    border-radius: 50px;
+    box-shadow: 0px 0px 55px #30364F;
+
+    color: #F0F0DB;
+    font-size: 25px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.credentials-entry-container h3 {
+    margin-bottom: 5px;
+}
+
+.username-input,
+.password-input {
+    margin: 5px;
+    padding: 5px;
+    border: 5px;
+    border-radius: 10px;
+    height: 35px;
+    width: 325px;
+    font-size: 15px;
+}
+
+.enter-credentials-button {
+    margin-top: 50px;
+
+    height: 50px;
+    width: 125px;
+
+    font-size: 25px;
+
+    border-radius: 25px;
+
+    cursor: pointer;
+
+    transition: ease 0.3s;
+}
+
 
 .enter-credentials-button:hover {
-  background-color: rgb(188, 7, 188) ;
-  color:rgb(5, 157, 157)
+    box-shadow: 0 0 10px #F0F0DB;
 }
-
-h3 {
-  color:rgb(188, 7, 188);
-  font-family: fantasy;
-  font-size: x-large;
-  margin-bottom :  0px;
-  margin-top: 0px;
-  margin-left: 5px;
-}
-
