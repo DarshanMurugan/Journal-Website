@@ -32,39 +32,32 @@ function Authenticator(){
 
   return(
     <>
-    <div className="credentials-entry-container">
-    <div>
-      <div>
-        <h3>Username</h3>
-      </div>
-      <div>
-      <input className="username-input" placeholder="Username" onChange={(e) => setUsername(e.target.value)} ></input>
-      </div>
-    </div>
 
-    <div>
-      <div>
-        <h3>Password</h3>
-      </div>
-      <div>
-      <input type="password"  className="password-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} ></input>
-      </div>
-    </div>
+              <div className="credentials-entry-container">
+                <div>
+                    <h3>Username</h3>
+                    <input className="username-input" placeholder="Username" onChange={(e) => setUsername(e.target.value)} ></input>
+                </div>
 
-    <div>
-      <div ><button className="enter-credentials-button" onClick={handleLogin}>Log in</button>
-      
-      </div>
+                <br></br>
 
-    </div>
-    </div>
+                <div>
+                    <h3>Password</h3>
+                    <input type="password" className="password-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} ></input>
+                </div>
+
+                <br></br>
+
+                <div>
+                    <button className="enter-credentials-button" onClick={handleLogin}>Log in</button>
+                </div>
+
+                <div>
+                  <h3> username: {username}</h3>
+                  <h3>password: {password}</h3>
+                </div>
+            </div>
     
-    <div>
-      <h3> username: {username}</h3>
-      <h3>password: {password}</h3>
-    </div>
-
-
     </>
   )
 
