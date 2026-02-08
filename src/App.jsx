@@ -8,8 +8,7 @@ import Authenticator from "./authentication.jsx";
 import  "./auth_styles.css"
 import Content from "./content.jsx";
 import SearchPage from "./SearchPage.jsx";
-
-
+import CreateAccount from "./CreateAccount.jsx"
 
 
 function App(){
@@ -20,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Authenticator /> 
+  },
+  {
+    path: '/create-account',
+    element: <CreateAccount/>
   },
   {
     path: "/main",

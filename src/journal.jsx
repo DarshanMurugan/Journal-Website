@@ -21,11 +21,20 @@ function Journal(){
 
     const fetchEntries = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/entries_back_end/");
+        const token = sessionStorage.getItem("accessToken");
+        const response = await axios.get("http://127.0.0.1:8000/entries_back_end/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+          );
         setPastContent(response.data);
       }catch (error) {
+        
+        console.log(error.response.data);
         alert("Error fetching data",error);
-      }
+      } 
       }
     };
 
@@ -37,15 +46,28 @@ function Journal(){
     e.preventDefault();
 
     try{
-      const response = await axios.post('http://127.0.0.1:8000/entries_back_end/',{
+      console.log("started request");
+      const token = sessionStorage.getItem("accessToken");
+      console.log(token);
+      const response = await axios.post('http://127.0.0.1:8000/entries_back_end/',
+      {
       title_text:newTitle,
-      entry_text:newEntry
-      });
+      entry_text:newEntry,
+      },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+
+        );
       alert('Entry saved!');
       window.location.reload();
       
-    } catch (error) {
-      alert("error saving entry",error);
+    } catch (error) { 
+      alert("error saving entry");
+      console.log(error.response.data);
+    
     }
   };
 
@@ -53,7 +75,10 @@ function Journal(){
 
   const searchContentById = async(id) => {
     try{
-      const response = await axios.get(`http://127.0.0.1:8000/entries_back_end/${id}`);
+      const response = await axios.get(`http://127.0.0.1:8000/entries_back_end/${id}`,
+        {
+          withCredentials: true,
+        });
       setContent(response.data);
       navigate("/main/Content");
     

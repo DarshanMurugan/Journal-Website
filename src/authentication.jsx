@@ -1,6 +1,7 @@
 import { useState } from "react"
 import "./auth_styles.css"
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 function Authenticator(){
   const [password,setPassword] = useState("")
   const [username,setUsername] = useState("")
@@ -12,18 +13,42 @@ function Authenticator(){
 
   
 
-  function handleLogin() {
-    
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    if (username == "Vladstock" && password == "journal") {
-      navigate("/journal"), {state: {username,password}};
-
+    try{
+      const response = await axios.post("http://127.0.0.1:8000/api/v1/auth/login/",
+        {
+          
+            "username": username,
+            "password": password,
+        },
+          {
+            headers: {
+            "Content-Type": "application/json",
+          },
+          }
+        
+    );
+    sessionStorage.setItem("accessToken",response.data.access);
+    navigate("/main/journal");
+    }
+     catch(error){
+      alert("something went wrong");
+      console.log(error.response.data);
     }
 
-    else{
-      alert("Username or Password is incorrect")
-    }
-  }
+
+  };
+  //   if (username == "Vladstock" && password == "journal") {
+  //     navigate("/main/journal"), {state: {username,password}};
+  //
+  //   }
+  //
+  //   else{
+  //     alert("Username or Password is incorrect")
+  //   }
+  // }
 
 
 
