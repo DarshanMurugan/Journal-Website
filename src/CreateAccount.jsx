@@ -17,17 +17,19 @@ function CreateAccount(){
     e.preventDefault();
     try{
   
-          const response = await axios.post('http://127.0.0.1:8000/api/v1/auth/registration/',{
-          username: username,
-          password1: password,
-          password2: password,
-        },
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/v1/auth/registration/",
           {
-            withCredentials: true,
+            username: username,
+            password1: password,
+            password2: password,
+          },
+          {
             headers: {
               "Content-Type": "application/json",
-            }
-          });
+            },
+          }
+        );
     }
     catch (error){
       alert("something went worng try again");

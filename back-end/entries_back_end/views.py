@@ -3,12 +3,15 @@ from rest_framework.generics import RetrieveAPIView
 from .models import Entries
 from .serializers import EntrySerializer
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth import authenticate, login 
+from rest_framework.permissions import IsAuthenticated,AllowAny
+from django.contrib.auth import authenticate,login
+
+from django.contrib.auth.models import User
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status,serializers
 from rest_framework.decorators import api_view  
 from rest_framework_simplejwt.tokens import RefreshToken
+
 
 class EntryCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
@@ -28,6 +31,7 @@ class GetContent(RetrieveAPIView):
     serializer_class = EntrySerializer
 
 class RegisterView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         serializer = UserCreateSerializer(data=request.data)
 
@@ -38,6 +42,21 @@ class RegisterView(APIView):
                 {"message":"User created"}
             )
         return Response(serializer.error,status=status.HTTP_400_BAD_REQUEST)
+
+
+#
+# class UserCreateSerializer(serializers.ModelSerializer):
+#     password = serializers.CharField(write_only=True)
+#
+#     class Meta:
+#         model = User
+#         fields = ["username","password"]
+#
+#     def create(self, validated_data):
+#         user = User.objects.create_user(
+#             username = validated_data["username"],
+#             password = validated_data["password"]
+#         )
 
 @api_view(['POST'])
 def login_view(request):

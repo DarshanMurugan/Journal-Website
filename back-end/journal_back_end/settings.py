@@ -165,31 +165,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
-'''REST_AUTH = {
-    "USE_JWT": True,
-    "JWT_AUTH_COOKIE": "_auth",
-    "JWT_REFRESH_COOKIE": "_refresh",
-    "JWT_AUTH_HTTPONLY": False,
-}'''
-
-'''SITE_ID = 1 
-
-ACCOUNT_LOGIN_METHODS = {"username"}
-
-ACCOUNT_SIGNUP_FIELDS = {
-    "username": {"required": True},
-    "email":{"required":False}
-}
-'''
-
-# settings.py
-
-'''SESSION_COOKIE_SAMESITE = "None"
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SAMESITE = "None"
-CSRF_COOKIE_SECURE = True
-'''
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "authorization",
 ]
@@ -204,4 +179,21 @@ CORS_ALLOW_METHODS = [
     "OPTIONS",
 ]
 
+SITE_ID = 1
 
+# Add these below your SITE_ID = 1
+ACCOUNT_AUTHENTICATION_METHOD = 'username' # or 'email'
+ACCOUNT_EMAIL_REQUIRED = False             # Set to True if using email login
+ACCOUNT_USERNAME_REQUIRED = True
+
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'my-app-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
+    'JWT_AUTH_HTTPONLY': False,
+}
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]

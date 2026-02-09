@@ -40,6 +40,9 @@ function Authenticator(){
 
 
   };
+
+
+  
   //   if (username == "Vladstock" && password == "journal") {
   //     navigate("/main/journal"), {state: {username,password}};
   //
