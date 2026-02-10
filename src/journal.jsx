@@ -13,7 +13,7 @@ function Journal(){
   const {setContent} = useOutletContext();
   const navigate = useNavigate();
 
-  function fetchContent(){
+  //function fetchContent(){
 
     useEffect(()=>{
       fetchEntries();
@@ -35,10 +35,10 @@ function Journal(){
         console.log(error.response.data);
         alert("Error fetching data",error);
       } 
-      }
-    };
+      };
+    //};
 
-  fetchContent();
+  //fetchContent();
 
 
 

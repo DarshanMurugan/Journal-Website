@@ -2,11 +2,13 @@ import { useState } from "react"
 import "./auth_styles.css"
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import hideIcon from "./assets/close-hide-password-icon.png";
+import showIcon from "./assets/open-hide-password-icon.png";
 function Authenticator(){
   const [password,setPassword] = useState("")
   const [username,setUsername] = useState("")
   const navigate = useNavigate()
-
+  const [hidePassword,setHidePassword] = useState(true)
   
 
 
@@ -63,15 +65,18 @@ function Authenticator(){
 
               <div className="credentials-entry-container">
                 <div>
-                    <h3>Username</h3>
+                    <h3>Enter Username</h3>
                     <input className="username-input" placeholder="Username" onChange={(e) => setUsername(e.target.value)} ></input>
                 </div>
 
                 <br></br>
 
-                <div>
-                    <h3>Password</h3>
-                    <input type="password" className="password-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} ></input>
+                <div >
+                    <h3>Enter Password</h3>
+                    <div className="password-div">
+                      <input type={hidePassword===true ? "password":"text" } className="password-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} ></input>
+                      <button className="hide-password-button"onClick={() => setHidePassword(prev => !prev)}><img className="password-hide-icon" src={hidePassword===true ? hideIcon:showIcon}/></button>
+                    </div>
                 </div>
 
                 <br></br>
@@ -80,10 +85,6 @@ function Authenticator(){
                     <button className="enter-credentials-button" onClick={handleLogin}>Log in</button>
                 </div>
 
-                <div>
-                  <h3> username: {username}</h3>
-                  <h3>password: {password}</h3>
-                </div>
             </div>
     
     </>

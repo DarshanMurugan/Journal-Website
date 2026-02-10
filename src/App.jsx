@@ -9,7 +9,7 @@ import  "./auth_styles.css"
 import Content from "./content.jsx";
 import SearchPage from "./SearchPage.jsx";
 import CreateAccount from "./CreateAccount.jsx"
-
+import WelcomePage from "./WelcomePage.jsx"
 
 function App(){
   return <RouterProvider router={router} />;
@@ -18,7 +18,11 @@ function App(){
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Authenticator /> 
+    element: <WelcomePage /> 
+  },
+  {
+    path: '/login',
+    element: <Authenticator />
   },
   {
     path: '/create-account',

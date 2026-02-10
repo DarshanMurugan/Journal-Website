@@ -39,8 +39,20 @@ body {
     border: 5px;
     border-radius: 10px;
     height: 35px;
-    width: 325px;
+    width: auto;
+    min-width: 300px;
     font-size: 15px;
+
+}
+
+
+.password-input{
+
+    margin-right: 0px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius: 0px;
+    min-width: 270px;
+  
 }
 
 .enter-credentials-button {
@@ -63,4 +75,36 @@ body {
 
 .enter-credentials-button:hover {
     box-shadow: 0 0 10px #F0F0DB;
+}
+
+
+.password-div {
+  display:flex;
+  align-items:center;
+
+}
+.password-hide-icon {
+  width: 30px;
+  height: 17px;
+  padding: 0px;
+  margin-top:5px;
+  
+}
+
+.hide-password-button {
+  padding:10px ;
+   
+  color: #F0F0DB;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width:50px;
+  
+}
+
+
+.hide-password-button:hover {
+  
+  box-shadow: 0px 0px 10px #F0F0DB;
+  cursor: pointer;
+
 }
