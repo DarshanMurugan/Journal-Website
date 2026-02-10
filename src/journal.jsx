@@ -75,10 +75,12 @@ function Journal(){
 
   const searchContentById = async(id) => {
     try{
+      
+      const token = sessionStorage.getItem("accessToken");
       const response = await axios.get(`http://127.0.0.1:8000/entries_back_end/${id}`,
-        {
-          withCredentials: true,
-        });
+        { headers: {
+          Authorization: `Bearer ${token}`
+        }});
       setContent(response.data);
       navigate("/main/Content");
     

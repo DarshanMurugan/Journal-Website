@@ -41,22 +41,22 @@ class RegisterView(APIView):
             return Response(
                 {"message":"User created"}
             )
-        return Response(serializer.error,status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
-#
-# class UserCreateSerializer(serializers.ModelSerializer):
-#     password = serializers.CharField(write_only=True)
-#
-#     class Meta:
-#         model = User
-#         fields = ["username","password"]
-#
-#     def create(self, validated_data):
-#         user = User.objects.create_user(
-#             username = validated_data["username"],
-#             password = validated_data["password"]
-#         )
+
+class UserCreateSerializer(serializers.ModelSerializer):
+     password = serializers.CharField(write_only=True)
+
+     class Meta:
+         model = User
+         fields = ["username","password"]
+
+     def create(self, validated_data):
+         user = User.objects.create_user(
+             username = validated_data["username"],
+             password = validated_data["password"]
+         )
 
 @api_view(['POST'])
 def login_view(request):
