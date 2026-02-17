@@ -1,29 +1,59 @@
 import { useState } from "react"
 import "./auth_styles.css"
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import hideIcon from "./assets/close-hide-password-icon.png";
+import showIcon from "./assets/open-hide-password-icon.png";
 function Authenticator(){
   const [password,setPassword] = useState("")
   const [username,setUsername] = useState("")
   const navigate = useNavigate()
-
+  const [hidePassword,setHidePassword] = useState(true)
   
 
 
 
   
 
-  function handleLogin() {
-    
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    if (username == "Vladstock" && password == "journal") {
-      navigate("/journal"), {state: {username,password}};
-
+    try{
+      const response = await axios.post("http://127.0.0.1:8000/api/v1/auth/login/",
+        {
+          
+            "username": username,
+            "password": password,
+        },
+          {
+            headers: {
+            "Content-Type": "application/json",
+          },
+          }
+        
+    );
+    sessionStorage.setItem("accessToken",response.data.access);
+    navigate("/main/journal");
+    }
+     catch(error){
+      alert("something went wrong");
+      console.log(error.response.data);
     }
 
-    else{
-      alert("Username or Password is incorrect")
-    }
-  }
+
+  };
+
+
+  
+  //   if (username == "Vladstock" && password == "journal") {
+  //     navigate("/main/journal"), {state: {username,password}};
+  //
+  //   }
+  //
+  //   else{
+  //     alert("Username or Password is incorrect")
+  //   }
+  // }
 
 
 
@@ -32,39 +62,31 @@ function Authenticator(){
 
   return(
     <>
-    <div className="credentials-entry-container">
-    <div>
-      <div>
-        <h3>Username</h3>
-      </div>
-      <div>
-      <input className="username-input" placeholder="Username" onChange={(e) => setUsername(e.target.value)} ></input>
-      </div>
-    </div>
 
-    <div>
-      <div>
-        <h3>Password</h3>
-      </div>
-      <div>
-      <input type="password"  className="password-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} ></input>
-      </div>
-    </div>
+              <div className="credentials-entry-container">
+                <div>
+                    <h3>Enter Username</h3>
+                    <input className="username-input" placeholder="Username" onChange={(e) => setUsername(e.target.value)} ></input>
+                </div>
 
-    <div>
-      <div ><button className="enter-credentials-button" onClick={handleLogin}>Log in</button>
-      
-      </div>
+                <br></br>
 
-    </div>
-    </div>
+                <div >
+                    <h3>Enter Password</h3>
+                    <div className="password-div">
+                      <input type={hidePassword===true ? "password":"text" } className="password-input-login-page" placeholder="Password" onChange={(e) => setPassword(e.target.value)} ></input>
+                      <button className="hide-password-button"onClick={() => setHidePassword(prev => !prev)}><img className="password-hide-icon" src={hidePassword===true ? hideIcon:showIcon}/></button>
+                    </div>
+                </div>
+
+                <br></br>
+
+                <div>
+                    <button className="enter-credentials-button" onClick={handleLogin}>Log in</button>
+                </div>
+
+            </div>
     
-    <div>
-      <h3> username: {username}</h3>
-      <h3>password: {password}</h3>
-    </div>
-
-
     </>
   )
 
