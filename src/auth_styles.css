@@ -33,7 +33,8 @@ body {
 }
 
 .username-input,
-.password-input {
+.password-input,
+.password-input-login-page{
     margin: 5px;
     padding: 5px;
     border: 5px;
@@ -46,7 +47,7 @@ body {
 }
 
 
-.password-input{
+.password-input-login-page{
 
     margin-right: 0px;
     border-top-right-radius:0px;

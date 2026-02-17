@@ -74,7 +74,7 @@ function Authenticator(){
                 <div >
                     <h3>Enter Password</h3>
                     <div className="password-div">
-                      <input type={hidePassword===true ? "password":"text" } className="password-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} ></input>
+                      <input type={hidePassword===true ? "password":"text" } className="password-input-login-page" placeholder="Password" onChange={(e) => setPassword(e.target.value)} ></input>
                       <button className="hide-password-button"onClick={() => setHidePassword(prev => !prev)}><img className="password-hide-icon" src={hidePassword===true ? hideIcon:showIcon}/></button>
                     </div>
                 </div>

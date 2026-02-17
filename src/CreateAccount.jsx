@@ -8,8 +8,9 @@ function CreateAccount(){
  const [username,setUsername] = useState();
  const [password,setPassword] = useState();
  const [checkUsername,setCheckUsername] = useState();
-
+ const [authError,setAuthError] = useState([]); 
  const [checkPassword,setCheckPassword] = useState();
+
   
 
   const handleCreateAccount = async (e) => {
@@ -41,6 +42,63 @@ function CreateAccount(){
     }
 
   }
+
+
+  const  handleAuthRules = (e) => {
+    console.log("function called");
+    const newPassword = e.target.value;
+    setAuthError([]);
+    let errors = ["Password must contain at least ",];
+      if (newPassword === null){
+
+      setAuthError([]);
+      return;
+    }
+
+
+
+    if (!(/[a-zA-Z]/.test(newPassword))){
+      errors.push("one letter");
+    }
+    if (!(/[0-9]/.test(newPassword))){
+        errors.push("one number");
+      }
+    if (!(/[!@#$%^&*_<>,./?:;"()+={}`]/.test(newPassword))){  
+        errors.push("one special character");
+      }
+
+    if (!(newPassword.length > 8)){
+      errors.push("greater than 8 characters");
+    }
+      
+    
+     if (errors.length === 1){
+      errors = []
+      setAuthError([])
+    }
+    // if (errors.length === 0){
+    //   setAuthError(["Password must contain at least ",
+    //     ...errors.join(", ")]);
+    // }
+
+        
+      setAuthError(prevError => ([
+        ...errors.join(", ")]));
+    
+
+
+        
+    
+
+    
+  }
+
+
+  const handlePasswordChange = (e) => {
+    
+    setPassword(e.target.value);
+    handleAuthRules()
+  }
      
 
   return(
@@ -55,7 +113,8 @@ function CreateAccount(){
                 
                 <div>
                     <h3>Password</h3>
-                    <input type="password" className="password-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} ></input>
+                    <input type="password" className="password-input" placeholder="Password" onChange={(e) => handleAuthRules(e)} ></input>
+                    <p>{authError.join("")}</p>
                 </div>
                 
 
