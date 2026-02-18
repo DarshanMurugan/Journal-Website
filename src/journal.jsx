@@ -45,7 +45,6 @@ function Journal(){
     try{
       console.log("started request");
       const token = sessionStorage.getItem("accessToken");
-      console.log(token);
       const response = await axios.post('http://127.0.0.1:8000/entries_back_end/',
       {
       title_text:newTitle,

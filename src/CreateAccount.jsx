@@ -45,7 +45,7 @@ function CreateAccount(){
 
 
   const  handleAuthRules = (e) => {
-    console.log("function called");
+    setPassword(e.target.value);
     const newPassword = e.target.value;
     setAuthError([]);
     let errors = ["Password must contain at least ",];
