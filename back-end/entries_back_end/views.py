@@ -9,22 +9,30 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status,serializers
-from rest_framework.decorators import api_view  
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from RAG.embeddings import Embedder
+from RAG.vector_search import Finder
 
 class EntryCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = EntrySerializer
-
+    
+    def __init__(self):
+        self.client = Embedder()
 
     def get_queryset(self):
-        print("USER:",self.request.user)
         return Entries.objects.filter(owner=self.request.user)
 
     def perform_create(self,serializer):
-        serializer.save(owner=self.request.user)
-        print("saved BRuhhh")
+        entry_text = serializer.validated_data["entry_text"]
+        
+        
+        serializer.save(owner = self.request.user)
+        self.client.embed_in_background(self.request.user,entry_text)
+        
+
 
 class GetContent(RetrieveAPIView):
     queryset = Entries.objects.all()
@@ -72,4 +80,14 @@ def login_view(request):
         })
 
     return Response({"detail":"Invalid credentials"}, status=401)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def finder_view(request):
+    query = request.headers.get("query")
+    return Response(Finder().find(query,self.request.user))
+    
+
+
 

@@ -1,7 +1,7 @@
 import { useState,useContext,useRef,useEffect } from "react";
 import axios from "axios";
 import './journal.css';
-import {useOutletContext,useNavigate} from 'react-router-dom';
+import {useNavigate,useSearchParams} from 'react-router-dom';
 
 function Journal(){
 
@@ -9,9 +9,14 @@ function Journal(){
   const [newTitle,setNewTitle] = useState([]);
   const [pastContent,setPastContent] = useState([]);
   const [searchContent,setSearchContent] = useState([]);
-
-  const {setContent} = useOutletContext();
+  const [isEmpty,setIsEmpty]  = useState(true);
   const navigate = useNavigate();
+
+  // const [searchParams] = useSearchParams();
+
+  // const getId = useSearchParams.get("id");
+
+  const [contentById,setContentById] = useState([]);
 
 
     useEffect(()=>{
@@ -40,45 +45,59 @@ function Journal(){
 
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
+    if (handleIsEmpty()) {
+        try{
+          console.log("started request");
+          const token = sessionStorage.getItem("accessToken");
+          const response = await axios.post('http://127.0.0.1:8000/entries_back_end/',
+          {
+          title_text:newTitle,
+          entry_text:newEntry,
+          },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
 
-    try{
-      console.log("started request");
-      const token = sessionStorage.getItem("accessToken");
-      const response = await axios.post('http://127.0.0.1:8000/entries_back_end/',
-      {
-      title_text:newTitle,
-      entry_text:newEntry,
-      },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+            );
+          window.location.reload();
+          
+        } catch (error) { 
+          alert("an error occured while trying to saving entry");
+          console.log(error.response.data);
+        
         }
-
-        );
-      alert('Entry saved!');
-      window.location.reload();
-      
-    } catch (error) { 
-      alert("error saving entry");
-      console.log(error.response.data);
-    
     }
   };
+
+
+  const handleIsEmpty = () => {
+    if (isEmpty){
+        console.log("we here bruh");
+        return true;
+    }
+    else {
+      setContentById([]);
+      setIsEmpty(true);
+      return false;
+    }
+  }
 
 
 
   const searchContentById = async(id) => {
     try{
-      
+      setIsEmpty(false)
       const token = sessionStorage.getItem("accessToken");
       const response = await axios.get(`http://127.0.0.1:8000/entries_back_end/${id}`,
         { headers: {
           Authorization: `Bearer ${token}`
         }});
-      setContent(response.data);
-      navigate("/main/Content");
+      setContentById(response.data);
+      // navigate("/main/Content");
     
       
 
@@ -86,6 +105,8 @@ function Journal(){
       console.log("error searching for data")
     }
   }
+
+  console.log(isEmpty);
 
   return(
     <>
@@ -108,14 +129,15 @@ function Journal(){
       
         
         <div className="journal-entry-div">
-            <input onChange={e => setNewTitle(e.target.value)} className="tittle-input" placeholder="Tittle"></input>
+            <input onChange={e => setNewTitle(e.target.value)} className="tittle-input"
+                placeholder="Tittle" value= {isEmpty ?  newTitle: contentById.title_text} readOnly={!isEmpty}></input>
             <textarea onChange={e => setNewEntry(e.target.value)} className="journal-entry"
-            placeholder="Dear Dairy,"/>
+            placeholder="Dear Dairy," value= {isEmpty ?  newEntry: contentById.entry_text} readOnly= {!isEmpty}/>
         </div>
       
       
     </div>
-      <button type="submit" >Save</button>
+      <button type="submit" >{isEmpty ? "Save":"clear"}</button>
     </form>
     </div>
     </> 
