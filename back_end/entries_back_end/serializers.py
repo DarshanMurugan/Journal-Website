@@ -5,7 +5,7 @@ from .models import Entries
 class EntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Entries
-        fields = ['id','title_text','entry_text','save_date']
+        fields = ['id','title_text','entry_text','save_date','entry_vector','is_embedded']
         read_only_fields = ['id','save_date']
 
 

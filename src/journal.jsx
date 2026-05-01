@@ -11,6 +11,7 @@ function Journal(){
   const [searchContent,setSearchContent] = useState([]);
   const [isEmpty,setIsEmpty]  = useState(true);
   const navigate = useNavigate();
+  const [query,setQuery] = useState([]);
 
   // const [searchParams] = useSearchParams();
 
@@ -79,7 +80,7 @@ function Journal(){
         console.log("we here bruh");
         return true;
     }
-    else {
+    else { 
       setContentById([]);
       setIsEmpty(true);
       return false;
@@ -106,11 +107,38 @@ function Journal(){
     }
   }
 
-  console.log(isEmpty);
+  const findContent = async(e) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+    const response = await axios.post(
+      'http://127.0.0.1:8000/api/finder/',
+      {
+      query: query,
+      },
+      {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }});
+
+    console.log(response);
+    } catch(error){
+      console.log("erorr finding data");
+      console.log(error.response.data);
+    }
+  }
+
 
   return(
     <>
+
+
+    <div className="searchContainer">
+        <input onChange= {e => setQuery(e.target.value)}   className="searchEntry" placeholder="Search"></input>
+        <button onClick= {() => findContent() } className="searchButton"></button>
+    </div>
     <div className="journal">
+      
+
     <form onSubmit={handleSubmit}>
       
     

@@ -15,6 +15,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from RAG.embeddings import Embedder
 from RAG.vector_search import Finder
 
+import pickle
+
 class EntryCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = EntrySerializer
@@ -27,10 +29,12 @@ class EntryCreateView(generics.ListCreateAPIView):
 
     def perform_create(self,serializer):
         entry_text = serializer.validated_data["entry_text"]
+
         
         
-        serializer.save(owner = self.request.user)
-        self.client.embed_in_background(self.request.user,entry_text)
+        serializer.save(owner = self.request.user,
+                        entry_vector = pickle.dumps(self.client.embed([entry_text]))
+                        )
         
 
 
@@ -85,9 +89,8 @@ def login_view(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def finder_view(request):
-    query = request.headers.get("query")
-    return Response(Finder().find(query,self.request.user))
-    
+    query = request.data.get("query")
+    return Response(Finder().find(query,request.user))
 
 
 
