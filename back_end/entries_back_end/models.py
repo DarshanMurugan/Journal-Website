@@ -2,6 +2,7 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from pgvector.django import VectorField
 # Create your models here.
 
 class Entries(models.Model):
@@ -9,7 +10,7 @@ class Entries(models.Model):
     title_text = models.CharField(1000)
     entry_text = models.TextField()
     save_date = models.DateTimeField(auto_now_add=True)
-    entry_vector = models.BinaryField()
+    entry_vectors = VectorField(dimensions=384,null=True,blank=True)
 
     def __str__(self):
         return self.title_text

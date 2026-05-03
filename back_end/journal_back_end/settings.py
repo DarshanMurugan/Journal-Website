@@ -95,8 +95,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'journaldb',
-        'USER':'postgres',
-        'PASSWORD':os.getenv('PSQL_PASS'),
+        'USER':'darshanmurugan',
+        'PASSWORD':'',
         'HOST':'localhost',
         'PORT':'5432',
     }

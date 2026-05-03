@@ -14,10 +14,10 @@ class Finder():
         answer_dict = {}
         from entries_back_end.models import Entries
         query_vector = self.client.embed(query)
-        queryset = Entries.objects.filter(owner=entry_id).values("entry_vector","entry_text","is_embedded")
+        queryset = Entries.objects.filter(owner=entry_id).values("entry_vectors","entry_text")
 
         for entry in queryset:
-            similarity = self.cosine_similarity(entry["entry_vector"],query_vector)
+            similarity = self.cosine_similarity(entry["entry_vectors"],query_vector)
             answer_dict[similarity] = entry["entry_text"]
             
         highest_similarity = heapq.nlargest(self.no_of_answers,answer_dict.keys())

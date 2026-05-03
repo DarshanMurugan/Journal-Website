@@ -15,7 +15,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from RAG.embeddings import Embedder
 from RAG.vector_search import Finder
 
-import pickle
 
 class EntryCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
@@ -33,7 +32,7 @@ class EntryCreateView(generics.ListCreateAPIView):
         
         
         serializer.save(owner = self.request.user,
-                        entry_vector = pickle.dumps(self.client.embed([entry_text]))
+                        entry_vectors = self.client.embed(entry_text)
                         )
         
 
