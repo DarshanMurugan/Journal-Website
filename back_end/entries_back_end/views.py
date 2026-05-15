@@ -5,7 +5,7 @@ from .serializers import EntrySerializer
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from django.contrib.auth import authenticate,login
-
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status,serializers
@@ -89,7 +89,19 @@ def login_view(request):
 @permission_classes([IsAuthenticated])
 def finder_view(request):
     query = request.data.get("query")
-    return Response(Finder().find(query,request.user))
+    finder_list = Finder().find(query,request.user)
 
+    finder_data = [
+        {
+
+        "entry_text": obj["entry_text"],
+        "title_text": obj["entry_text"],
+        "id": obj["pk"],
+        }
+        for obj in finder_list
+    ]
+
+
+    return JsonResponse(finder_data,safe=False)
 
 
