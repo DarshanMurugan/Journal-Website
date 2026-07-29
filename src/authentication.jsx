@@ -33,7 +33,7 @@ function Authenticator(){
         
     );
     sessionStorage.setItem("accessToken",response.data.access);
-    navigate("/main/journal");
+    navigate("/Journal");
     }
      catch(error){
       alert("something went wrong");

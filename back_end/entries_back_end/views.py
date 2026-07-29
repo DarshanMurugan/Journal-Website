@@ -5,26 +5,37 @@ from .serializers import EntrySerializer
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from django.contrib.auth import authenticate,login
-
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status,serializers
-from rest_framework.decorators import api_view  
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
+
+from RAG.embeddings import Embedder
+from RAG.vector_search import Finder
 
 
 class EntryCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = EntrySerializer
-
+    
+    def __init__(self):
+        self.client = Embedder()
 
     def get_queryset(self):
-        print("USER:",self.request.user)
         return Entries.objects.filter(owner=self.request.user)
 
     def perform_create(self,serializer):
-        serializer.save(owner=self.request.user)
-        print("saved BRuhhh")
+        entry_text = serializer.validated_data["entry_text"]
+
+        
+        
+        serializer.save(owner = self.request.user,
+                        entry_vectors = self.client.embed(entry_text)
+                        )
+        
+
 
 class GetContent(RetrieveAPIView):
     queryset = Entries.objects.all()
@@ -72,4 +83,25 @@ def login_view(request):
         })
 
     return Response({"detail":"Invalid credentials"}, status=401)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def finder_view(request):
+    query = request.data.get("query")
+    finder_list = Finder().find(query,request.user)
+
+    finder_data = [
+        {
+
+        "entry_text": obj["entry_text"],
+        "title_text": obj["entry_text"],
+        "id": obj["pk"],
+        }
+        for obj in finder_list
+    ]
+
+
+    return JsonResponse(finder_data,safe=False)
+
 

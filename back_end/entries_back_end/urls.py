@@ -5,12 +5,13 @@ from django.urls import path
 from .views import RegisterView
 from .views import EntryCreateView
 from .views import GetContent
-
+from . import views
 app_name = "journal-entry"
 
 urlpatterns = [
     path('',EntryCreateView.as_view(),name = 'entries'),
     path('<int:pk>/',GetContent.as_view()),
     path('register/',RegisterView.as_view()),
-    
+    path('finder/',views.finder_view),
+       
 ]

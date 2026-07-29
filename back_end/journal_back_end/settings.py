@@ -93,8 +93,12 @@ WSGI_APPLICATION = 'journal_back_end.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'journaldb',
+        'USER':'darshanmurugan',
+        'PASSWORD':'',
+        'HOST':'localhost',
+        'PORT':'5432',
     }
 }
 
@@ -182,9 +186,12 @@ CORS_ALLOW_METHODS = [
 SITE_ID = 1
 
 # Add these below your SITE_ID = 1
-ACCOUNT_AUTHENTICATION_METHOD = 'username' # or 'email'
-ACCOUNT_EMAIL_REQUIRED = False             # Set to True if using email login
-ACCOUNT_USERNAME_REQUIRED = True
+# ACCOUNT_AUTHENTICATION_METHOD = 'username' # or 'email'
+ACCOUNT_EMAIL_REQUIRED = False 
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_UNIQUE_EMAIL = False
+# Set to True if using email login
+# ACCOUNT_USERNAME_REQUIRED = True
 
 REST_AUTH = {
     'USE_JWT': True,
@@ -197,3 +204,13 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+ACCOUNT_LOGIN_METHODS = {'username'}
+
+ACCOUNT_SIGNUP_FIELDS = {
+    'username': {
+        'required': True,
+    },
+    'email': {
+        'required': False,
+    },
+}
